@@ -65,6 +65,11 @@ nat_gateways = {
 app_port = 8080  # port your app instances listen on
 db_port  = 5432  # 5432 = PostgreSQL, 3306 = MySQL
 
+# ── Phase 6: EC2 ──────────────────────────────────────────────────────────────
+# instance_type  = "t3.micro"   # optional; defaults to t3.micro
+# start_schedule = "cron(0 11 * * ? *)"  # optional; 7am US/Eastern default
+# stop_schedule  = "cron(0 23 * * ? *)"  # optional; 7pm US/Eastern default
+
 # ── Phase 5: S3 ───────────────────────────────────────────────────────────────
 cloudtrail_bucket_name = "aws-cloudtrail-logs-ACCOUNT_ID-RANDOM"
 cloudtrail_trail_name  = "management-events"

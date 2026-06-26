@@ -6,6 +6,10 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.0"
     }
+    archive = {
+      source  = "hashicorp/archive"
+      version = "~> 2.0"
+    }
   }
 
   # Uncomment after Phase 1 (global/s3-backend) is applied and you have a bucket
@@ -60,12 +64,14 @@ module "s3" {
 }
 
 # ── Phase 6: EC2 ──────────────────────────────────────────────────────────────
-# module "ec2" {
-#   source             = "../../modules/ec2"
-#   vpc_id             = module.vpc.vpc_id
-#   private_subnet_ids = module.vpc.private_subnet_ids
-#   tags               = local.common_tags
-# }
+module "ec2" {
+  source                = "../../modules/ec2"
+  environment           = var.environment
+  subnet_id             = module.vpc.public_subnet_ids["us-east-1a"]
+  app_sg_id             = module.security_groups.app_sg_id
+  instance_profile_name = module.iam.aws_organizations_instance_profile_name
+  tags                  = local.common_tags
+}
 
 # ── Phase 7: RDS ──────────────────────────────────────────────────────────────
 # module "rds" {
