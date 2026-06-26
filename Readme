@@ -1,0 +1,65 @@
+# AWS Environment — Terraform
+
+This repository manages the full AWS environment using Terraform.
+All existing resources are imported gradually, phase by phase.
+
+## Structure
+
+```
+aws-environment/
+├── environments/
+│   └── prod/               # Production environment (consumer of modules)
+│       ├── main.tf         # Calls all modules
+│       ├── variables.tf    # Input variables
+│       ├── locals.tf       # Common tags and naming
+│       ├── outputs.tf      # Environment-level outputs
+│       └── terraform.tfvars# Actual variable values (gitignored)
+│
+├── modules/                # Reusable resource modules
+│   ├── vpc/                # VPC, subnets, IGW, route tables
+│   ├── security_groups/    # All security groups
+│   ├── iam/                # IAM roles, policies, instance profiles
+│   ├── ec2/                # EC2 instances, EIPs, ENIs
+│   ├── rds/                # RDS instances and subnet groups
+│   ├── s3/                 # S3 buckets and policies
+│   ├── alb/                # Load balancers, target groups, listeners
+│   ├── route53/            # DNS hosted zones and records
+│   └── cloudwatch/         # Alarms, log groups, dashboards
+│
+└── global/
+    └── s3-backend/         # Remote state bucket + DynamoDB lock table
+```
+
+## Import Order (Phases)
+
+| Phase | Module            | Status      |
+|-------|-------------------|-------------|
+| 1     | global/s3-backend | ⬜ Pending  |
+| 2     | vpc               | ✅ Complete |
+| 3     | security_groups   | ⬜ Pending  |
+| 4     | iam               | ⬜ Pending  |
+| 5     | s3                | ⬜ Pending  |
+| 6     | ec2               | ⬜ Pending  |
+| 7     | rds               | ⬜ Pending  |
+| 8     | alb               | ⬜ Pending  |
+| 9     | route53           | ⬜ Pending  |
+| 10    | cloudwatch        | ⬜ Pending  |
+
+## Usage
+
+```bash
+cd environments/prod
+terraform init
+terraform plan
+terraform apply
+```
+
+## Security Scanning
+
+Run after every import phase:
+```bash
+checkov -d .
+tfsec .
+terraform validate
+tflint
+```

@@ -1,0 +1,62 @@
+# Copy this file to terraform.tfvars and fill in your actual AWS resource IDs.
+# terraform.tfvars is gitignored — never commit it.
+
+aws_region  = "us-east-1"
+environment = "prod"
+project     = "my-project"
+
+# ── Phase 2: VPC ─────────────────────────────────────────────────────────────
+vpc_id         = "vpc-REPLACE-ME"
+vpc_cidr_block = "10.0.0.0/16"
+igw_id         = "igw-REPLACE-ME"
+
+public_subnets = {
+  "us-east-1a" = {
+    id                = "subnet-REPLACE-ME"
+    cidr_block        = "10.0.1.0/24"
+    availability_zone = "us-east-1a"
+  }
+  "us-east-1b" = {
+    id                = "subnet-REPLACE-ME"
+    cidr_block        = "10.0.2.0/24"
+    availability_zone = "us-east-1b"
+  }
+  "us-east-1c" = {
+    id                = "subnet-REPLACE-ME"
+    cidr_block        = "10.0.3.0/24"
+    availability_zone = "us-east-1c"
+  }
+}
+
+# nat_gateway_az: which NAT gateway's route table this subnet routes through.
+# Single NAT (cost-efficient): point all private subnets to "us-east-1a".
+# HA: point each subnet to its own AZ key.
+private_subnets = {
+  "us-east-1a" = {
+    id                = "subnet-REPLACE-ME"
+    cidr_block        = "10.0.11.0/24"
+    availability_zone = "us-east-1a"
+    nat_gateway_az    = "us-east-1a"
+  }
+  "us-east-1b" = {
+    id                = "subnet-REPLACE-ME"
+    cidr_block        = "10.0.12.0/24"
+    availability_zone = "us-east-1b"
+    nat_gateway_az    = "us-east-1a"  # change to "us-east-1b" for HA
+  }
+  "us-east-1c" = {
+    id                = "subnet-REPLACE-ME"
+    cidr_block        = "10.0.13.0/24"
+    availability_zone = "us-east-1c"
+    nat_gateway_az    = "us-east-1a"  # change to "us-east-1c" for HA
+  }
+}
+
+nat_gateways = {
+  "us-east-1a" = {
+    id        = "nat-REPLACE-ME"
+    subnet_id = "subnet-REPLACE-ME-PUB-1A"
+    eip_id    = "eipalloc-REPLACE-ME"
+  }
+  # Add more entries for HA NAT gateways
+}
