@@ -1,4 +1,5 @@
 resource "aws_security_group" "alb" {
+  #checkov:skip=CKV2_AWS_5:SGs are pre-provisioned before ALB/EC2/RDS resources exist; attached in later phases
   name        = "alb-${var.tags["Environment"]}"
   description = "Internet-facing ALB - allows HTTP and HTTPS from anywhere"
   vpc_id      = var.vpc_id
@@ -8,7 +9,7 @@ resource "aws_security_group" "alb" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] #checkov:skip=CKV_AWS_260:ALB must accept public HTTP to redirect to HTTPS
+    cidr_blocks = ["0.0.0.0/0"] #checkov:skip=CKV_AWS_260:ALB must accept public HTTP to redirect to HTTPS #tfsec:ignore:aws-ec2-no-public-ingress-sgr
   }
 
   ingress {
@@ -16,7 +17,7 @@ resource "aws_security_group" "alb" {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"] #tfsec:ignore:aws-ec2-no-public-ingress-sgr
   }
 
   egress {
@@ -38,6 +39,7 @@ resource "aws_security_group" "alb" {
 }
 
 resource "aws_security_group" "app" {
+  #checkov:skip=CKV2_AWS_5:SGs are pre-provisioned before ALB/EC2/RDS resources exist; attached in later phases
   name        = "app-${var.tags["Environment"]}"
   description = "App instances - allows traffic from ALB only"
   vpc_id      = var.vpc_id
@@ -63,7 +65,7 @@ resource "aws_security_group" "app" {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"] #tfsec:ignore:aws-ec2-no-public-egress-sgr
   }
 
   tags = merge(var.tags, {
@@ -77,6 +79,7 @@ resource "aws_security_group" "app" {
 }
 
 resource "aws_security_group" "rds" {
+  #checkov:skip=CKV2_AWS_5:SGs are pre-provisioned before ALB/EC2/RDS resources exist; attached in later phases
   name        = "rds-${var.tags["Environment"]}"
   description = "RDS - allows database traffic from app instances only"
   vpc_id      = var.vpc_id
