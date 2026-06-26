@@ -36,11 +36,14 @@ module "vpc" {
 }
 
 # ── Phase 3: Security Groups ──────────────────────────────────────────────────
-# module "security_groups" {
-#   source = "../../modules/security_groups"
-#   vpc_id = module.vpc.vpc_id
-#   tags   = local.common_tags
-# }
+module "security_groups" {
+  source         = "../../modules/security_groups"
+  vpc_id         = module.vpc.vpc_id
+  vpc_cidr_block = var.vpc_cidr_block
+  app_port       = var.app_port
+  db_port        = var.db_port
+  tags           = local.common_tags
+}
 
 # ── Phase 4: IAM ──────────────────────────────────────────────────────────────
 # module "iam" {

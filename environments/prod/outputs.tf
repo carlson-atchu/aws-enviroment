@@ -18,3 +18,19 @@ output "nat_gateway_ids" {
   description = "Map of AZ → NAT gateway ID"
   value       = module.vpc.nat_gateway_ids
 }
+
+# ── Phase 3: Security Groups ──────────────────────────────────────────────────
+output "alb_sg_id" {
+  description = "ALB security group ID"
+  value       = module.security_groups.alb_sg_id
+}
+
+output "app_sg_id" {
+  description = "App security group ID"
+  value       = module.security_groups.app_sg_id
+}
+
+output "rds_sg_id" {
+  description = "RDS security group ID"
+  value       = module.security_groups.rds_sg_id
+}

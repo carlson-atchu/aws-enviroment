@@ -61,3 +61,17 @@ variable "nat_gateways" {
   }))
   default = {}
 }
+
+# ── Phase 3: Security Groups ──────────────────────────────────────────────────
+
+variable "app_port" {
+  description = "Port the app instances listen on"
+  type        = number
+  default     = 8080
+}
+
+variable "db_port" {
+  description = "Database port (5432 = PostgreSQL, 3306 = MySQL)"
+  type        = number
+  default     = 5432
+}

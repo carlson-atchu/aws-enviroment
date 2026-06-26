@@ -60,3 +60,7 @@ nat_gateways = {
   }
   # Add more entries for HA NAT gateways
 }
+
+# ── Phase 3: Security Groups ──────────────────────────────────────────────────
+app_port = 8080  # port your app instances listen on
+db_port  = 5432  # 5432 = PostgreSQL, 3306 = MySQL
