@@ -36,9 +36,9 @@ aws-environment/
 |-------|-------------------|-------------|
 | 1     | global/s3-backend | ⬜ Pending  |
 | 2     | vpc               | ✅ Complete |
-| 3     | security_groups   | ⬜ Pending  |
-| 4     | iam               | ⬜ Pending  |
-| 5     | s3                | ⬜ Pending  |
+| 3     | security_groups   | ✅ Complete |
+| 4     | iam               | ✅ Complete |
+| 5     | s3                | ✅ Complete |
 | 6     | ec2               | ⬜ Pending  |
 | 7     | rds               | ⬜ Pending  |
 | 8     | alb               | ⬜ Pending  |

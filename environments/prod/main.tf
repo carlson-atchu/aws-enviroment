@@ -52,10 +52,12 @@ module "iam" {
 }
 
 # ── Phase 5: S3 ───────────────────────────────────────────────────────────────
-# module "s3" {
-#   source = "../../modules/s3"
-#   tags   = local.common_tags
-# }
+module "s3" {
+  source                 = "../../modules/s3"
+  cloudtrail_bucket_name = var.cloudtrail_bucket_name
+  cloudtrail_trail_name  = var.cloudtrail_trail_name
+  tags                   = local.common_tags
+}
 
 # ── Phase 6: EC2 ──────────────────────────────────────────────────────────────
 # module "ec2" {

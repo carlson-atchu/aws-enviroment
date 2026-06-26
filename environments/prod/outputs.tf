@@ -30,6 +30,17 @@ output "aws_organizations_instance_profile_name" {
   value       = module.iam.aws_organizations_instance_profile_name
 }
 
+# ── Phase 5: S3 ───────────────────────────────────────────────────────────────
+output "cloudtrail_bucket_id" {
+  description = "Name of the CloudTrail logs S3 bucket"
+  value       = module.s3.cloudtrail_bucket_id
+}
+
+output "cloudtrail_bucket_arn" {
+  description = "ARN of the CloudTrail logs S3 bucket"
+  value       = module.s3.cloudtrail_bucket_arn
+}
+
 # ── Phase 3: Security Groups ──────────────────────────────────────────────────
 output "alb_sg_id" {
   description = "ALB security group ID"

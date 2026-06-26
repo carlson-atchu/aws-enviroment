@@ -75,3 +75,16 @@ variable "db_port" {
   type        = number
   default     = 5432
 }
+
+# ── Phase 5: S3 ───────────────────────────────────────────────────────────────
+
+variable "cloudtrail_bucket_name" {
+  description = "Name of the CloudTrail logs S3 bucket"
+  type        = string
+}
+
+variable "cloudtrail_trail_name" {
+  description = "Name of the CloudTrail trail that writes to the CloudTrail logs bucket"
+  type        = string
+  default     = "management-events"
+}
