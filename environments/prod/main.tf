@@ -46,10 +46,10 @@ module "security_groups" {
 }
 
 # ── Phase 4: IAM ──────────────────────────────────────────────────────────────
-# module "iam" {
-#   source = "../../modules/iam"
-#   tags   = local.common_tags
-# }
+module "iam" {
+  source = "../../modules/iam"
+  tags   = local.common_tags
+}
 
 # ── Phase 5: S3 ───────────────────────────────────────────────────────────────
 # module "s3" {

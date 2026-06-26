@@ -19,6 +19,17 @@ output "nat_gateway_ids" {
   value       = module.vpc.nat_gateway_ids
 }
 
+# ── Phase 4: IAM ──────────────────────────────────────────────────────────────
+output "terraform_identity_center_admin_role_arn" {
+  description = "ARN of the terraform-identity-center-admin role"
+  value       = module.iam.terraform_identity_center_admin_role_arn
+}
+
+output "aws_organizations_instance_profile_name" {
+  description = "Name of the aws-organizations instance profile"
+  value       = module.iam.aws_organizations_instance_profile_name
+}
+
 # ── Phase 3: Security Groups ──────────────────────────────────────────────────
 output "alb_sg_id" {
   description = "ALB security group ID"
