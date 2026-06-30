@@ -46,6 +46,17 @@ output "scheduler_lambda_arn" {
   value       = module.ec2.scheduler_lambda_arn
 }
 
+# ── Phase 10: CloudWatch ─────────────────────────────────────────────────────
+output "cloudtrail_trail_arn" {
+  description = "ARN of the management-events CloudTrail trail"
+  value       = module.cloudwatch.cloudtrail_arn
+}
+
+output "yt_upload_failures_alarm_arn" {
+  description = "ARN of the yt-auto-uploader upload failures CloudWatch alarm"
+  value       = module.cloudwatch.yt_upload_failures_alarm_arn
+}
+
 # ── Phase 5: S3 ───────────────────────────────────────────────────────────────
 output "cloudtrail_bucket_id" {
   description = "Name of the CloudTrail logs S3 bucket"

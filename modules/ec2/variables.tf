@@ -25,15 +25,21 @@ variable "instance_type" {
 }
 
 variable "start_schedule" {
-  description = "EventBridge cron expression to start the instance (UTC). Default = 7am US/Eastern."
+  description = "EventBridge cron expression to start the instance (UTC). Default = 7am US/Eastern Mon-Fri."
   type        = string
-  default     = "cron(0 11 * * ? *)"
+  default     = "cron(0 11 ? * MON-FRI *)"
 }
 
 variable "stop_schedule" {
-  description = "EventBridge cron expression to stop the instance (UTC). Default = 7pm US/Eastern."
+  description = "EventBridge cron expression to stop the instance (UTC). Default = 7pm US/Eastern Mon-Fri."
   type        = string
-  default     = "cron(0 23 * * ? *)"
+  default     = "cron(0 23 ? * MON-FRI *)"
+}
+
+variable "weekend_stop_schedule" {
+  description = "EventBridge cron expression for weekend EC2 stop (UTC). Default = midnight US/Eastern Saturday."
+  type        = string
+  default     = "cron(1 0 ? * SAT *)"
 }
 
 variable "tags" {

@@ -29,6 +29,13 @@ resource "aws_instance" "app" {
   monitoring                  = true
   associate_public_ip_address = true
 
+  # Ignore AMI updates (most_recent picks newer AMIs on each plan) and
+  # associate_public_ip_address (subnet auto-assign reflects false in state
+  # even though the instance has a public IP).
+  lifecycle {
+    ignore_changes = [ami, associate_public_ip_address]
+  }
+
   metadata_options {
     http_endpoint               = "enabled"
     http_tokens                 = "required"
@@ -188,4 +195,27 @@ resource "aws_lambda_permission" "stop" {
   function_name = aws_lambda_function.scheduler.function_name
   principal     = "events.amazonaws.com"
   source_arn    = aws_cloudwatch_event_rule.stop.arn
+}
+
+resource "aws_cloudwatch_event_rule" "weekend_stop" {
+  name                = "ec2-weekend-stop"
+  description         = "Stop app EC2 at midnight US/Eastern on Saturdays (00:01 UTC)"
+  schedule_expression = var.weekend_stop_schedule
+
+  tags = var.tags
+}
+
+resource "aws_cloudwatch_event_target" "weekend_stop" {
+  rule      = aws_cloudwatch_event_rule.weekend_stop.name
+  target_id = "WeekendStop"
+  arn       = aws_lambda_function.scheduler.arn
+  input     = jsonencode({ action = "stop" })
+}
+
+resource "aws_lambda_permission" "weekend_stop" {
+  statement_id  = "AllowWeekendStopEventBridge"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.scheduler.function_name
+  principal     = "events.amazonaws.com"
+  source_arn    = aws_cloudwatch_event_rule.weekend_stop.arn
 }

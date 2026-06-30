@@ -96,7 +96,8 @@ module "ec2" {
 # }
 
 # ── Phase 10: CloudWatch ──────────────────────────────────────────────────────
-# module "cloudwatch" {
-#   source = "../../modules/cloudwatch"
-#   tags   = local.common_tags
-# }
+module "cloudwatch" {
+  source                    = "../../modules/cloudwatch"
+  cloudtrail_s3_bucket_name = var.cloudtrail_bucket_name
+  tags                      = local.common_tags
+}

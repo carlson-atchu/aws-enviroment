@@ -41,9 +41,9 @@ aws-environment/
 | 5     | s3                | ✅ Complete |
 | 6     | ec2               | ✅ Complete |
 | 7     | rds               | ⏭ Skipped  |
-| 8     | alb               | ⬜ Pending  |
-| 9     | route53           | ⬜ Pending  |
-| 10    | cloudwatch        | ⬜ Pending  |
+| 8     | alb               | ⏭ Skipped  |
+| 9     | route53           | ⏭ Skipped  |
+| 10    | cloudwatch        | ✅ Complete |
 
 ## Usage
 
