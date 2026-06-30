@@ -40,7 +40,7 @@ aws-environment/
 | 4     | iam               | ✅ Complete |
 | 5     | s3                | ✅ Complete |
 | 6     | ec2               | ✅ Complete |
-| 7     | rds               | ⬜ Pending  |
+| 7     | rds               | ⏭ Skipped  |
 | 8     | alb               | ⬜ Pending  |
 | 9     | route53           | ⬜ Pending  |
 | 10    | cloudwatch        | ⬜ Pending  |
